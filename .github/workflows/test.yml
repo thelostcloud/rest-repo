@@ -7,7 +7,7 @@ jobs:
   test:
     name: Test Workflow
     runs-on: ubuntu-latest
-    environment: testo
+    environment: te
     steps:
       - name: Hello
         run: |
