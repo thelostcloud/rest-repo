@@ -5,12 +5,13 @@ on:
 
 permissions:
   contents: read
+  deployments: read
 
 jobs:
   test:
     name: Test Workflow
     runs-on: ubuntu-latest
-    environment: te
+    environment: testtest
     steps:
       - name: Hello
         run: |
