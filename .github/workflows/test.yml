@@ -6,6 +6,7 @@ on:
 permissions:
   contents: read
   deployments: read
+  id-token: none
 
 jobs:
   test:
