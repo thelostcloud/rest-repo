@@ -21,7 +21,7 @@ jobs:
           result-encoding: string
           retries: 3
           script: |
-            let envs = github.rest.repos.getAllEnvironments({              
+            let envs = await github.rest.repos.getAllEnvironments({              
               owner: context.repo.owner,
               repo: context.repo.repo,
             })
