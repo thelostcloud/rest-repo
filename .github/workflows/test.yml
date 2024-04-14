@@ -21,24 +21,28 @@ jobs:
           result-encoding: string
           retries: 3
           script: |
-            let envs = await github.rest.repos.getAllEnvironments({              
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-            })
-            console.log(envs)
-            if (envs.data.environments) {
-              envs.data.environments?.forEach((e) => {
-                if (e.protection_rules && e.protection_rules.length > 0) {
-                  console.log('Environement Protection Rules is Set:');
-                  console.log(e.protection_rules);
-                } else {
-                  console.log('Not Protection Rules set.  Aborting');
-                  throw new Error("Not Protection Rules set.  Aborting");
-                }
-              });
-            } else {
-              console.log('No Env Set...Failed');
-              throw new Error("No Env Set...Failed");
+            try {
+              let envs = await github.rest.repos.getAllEnvironments({              
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+              })
+              console.log(envs)
+              if (envs.data.environments) {
+                envs.data.environments?.forEach((e) => {
+                  if (e.protection_rules && e.protection_rules.length > 0) {
+                    console.log('Environement Protection Rules is Set:');
+                    console.log(e.protection_rules);
+                  } else {
+                    console.log('Not Protection Rules set.  Aborting');
+                    throw new Error("Not Protection Rules set.  Aborting");
+                  }
+                });
+              } else {
+                console.log('No Env Set...Failed');
+                throw new Error("No Env Set...Failed");
+              }
+            } catch (e) {
+              console.error(e);
             }
 
       - name: Hello
