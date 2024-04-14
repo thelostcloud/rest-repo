@@ -33,12 +33,12 @@ jobs:
                   console.log(e.protection_rules);
                 } else {
                   console.log('Not Protection Rules set.  Aborting');
-                  return false;
+                  throw new Error("Not Protection Rules set.  Aborting");
                 }
               });
             } else {
-              console.log('No Env Set...Faile');
-              return false;
+              console.log('No Env Set...Failed');
+              throw new Error("No Env Set...Failed");
             }
 
       - name: Hello
