@@ -14,6 +14,32 @@ jobs:
     runs-on: ubuntu-latest
     environment: testtest
     steps:
+      - name: Check Approval
+        uses: actions/github-script@v7
+        id: my-script
+        with:
+          result-encoding: string
+          retries: 3
+          script: |
+            const envs = github.rest.repos.getAllEnvironments({              
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            })
+            if (envs.data.environments) {
+              envs.data.environments?.forEach((e) => {
+                if (e.protection_rules && e.protection_rules.length > 0) {
+                  console.log('Environement Protection Rules is Set:');
+                  console.log(e.protection_rules);
+                } else {
+                  console.log('Not Protection Rules set.  Aborting');
+                  return false;
+                }
+              });
+            } else {
+              console.log('No Env Set...Faile');
+              return false;
+            }
+
       - name: Hello
         run: |
           echo "Hello"
